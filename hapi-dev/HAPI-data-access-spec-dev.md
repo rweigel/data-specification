@@ -99,9 +99,10 @@ request.
 Consider this example GET request:
 ```
 http://server/hapi/data?id=alpha&time.min=2016-07-13
+http://server/hapi/data?dataset=alpha&start=2016-07-13 (HAPI 3.0+ servers)
 ```
 
-The two request parameters are `id` (corresponding to the identifier of the dataset) and `time.min`. They 
+The two request parameters are `dataset` (corresponding to the identifier of the dataset) and `start`. They 
 have values of `alpha` and `2016-07-13` respectively. This document will always
 use the full phrase "request parameter" to refer to these URL elements to draw a
 clear distinction from a parameter in a dataset.
@@ -140,8 +141,12 @@ http://server/hapi (Optional HTML landing page)
 http://server/hapi/capabilities
 http://server/hapi/about
 http://server/hapi/catalog
+
 http://server/hapi/info?id=...[&...]
+http://server/hapi/info?dataset=...[&...] (HAPI 3.0+ servers)
+
 http://server/hapi/data?id=...&...
+http://server/hapi/data?dataset=...&... (HAPI 3.0+ servers)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All requests to a HAPI server are for retrieving resources and must not change
@@ -446,6 +451,7 @@ data are all within a single JSON entity, and so newlines are not necessary.
 **Sample Invocation**
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+http://server/hapi/info?dataset=ACE_MAG (HAPI 3.0+ servers)
 http://server/hapi/info?id=ACE_MAG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -453,7 +459,7 @@ http://server/hapi/info?id=ACE_MAG
 
 | Name       | Description                                                       |
 |------------|-------------------------------------------------------------------|
-| id         | **Required** The identifier for the dataset.                      |
+| dataset or id | **Required** The identifier for the dataset. In version 3.0, `dataset` was added and `id` is depricated.                     |
 | parameters | **Optional** A subset of the parameters to include in the header. |
 
 **Response**
@@ -727,8 +733,8 @@ parameter.
 | Name       | Description                                                                                                                                                          |
 |------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | id         | **Required** The identifier for the dataset.                                                                                                                          |
-| time.min   | **Required** The inclusive begin time for the data to include in the response.                                                                                        |
-| time.max   | **Required** The exclusive end time for the data to include in the response.                                                                                         |
+| start or time.min | **Required** The inclusive begin time for the data to include in the response. In version 3.0, `start` was added and `time.min` is depreciated. |
+| stop or time.max   | **Required** The exclusive end time for the data to include in the response. In version 3.0, `stop` was added and `time.max` is depreciated.                                                                                        |
 | parameters | **Optional** A comma-separated list of parameters to include in the response. Default is all parameters.                                                             |
 | include    | **Optional** Has one possible value of "header" to indicate that the info header should precede the data. The header lines will be prefixed with the "\#" character. |
 | format     | **Optional** The desired format for the data stream. Possible values are "csv", "binary", and "json".                                                                |
